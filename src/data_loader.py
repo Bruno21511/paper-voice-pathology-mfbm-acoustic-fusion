@@ -5,7 +5,7 @@ import soundfile as sf
 import os
 
 
-def _limit_audio(signal, WS=256, k1=0.001, k2m=10):
+def _limit_audio(signal, WS=15, k1=0.001, k2m=10):
     """
     Energy-based speech trimming (endpoint detection).
 
@@ -37,8 +37,8 @@ def _limit_audio(signal, WS=256, k1=0.001, k2m=10):
     ----------
     signal : np.ndarray
         Input audio signal.
-    WS : int, optional
-        Frame size for short-time energy computation (default is 256).
+    WS_ms : int, optional
+        Frame size for short-time energy computation (default is 15 ms).
     k1 : float, optional
         Lower energy threshold for speech detection (default is 0.001).
     k2m : float, optional
@@ -119,7 +119,7 @@ def data_loader(
     data_root="../data",
     normalize=True,
     trimm_signal=True,
-    WS=256,
+    WS_ms=15,
     k1=1e-3,
     k2_ratio=10
 ):
@@ -182,8 +182,13 @@ def data_loader(
     # -----------------------------
     if trimm_signal:
         df["signal"] = [
-            _limit_audio(x, WS=WS, k1=k1, k2m=k2_ratio)
-            for x in df["signal"].values
+            _limit_audio(
+                sig,
+                WS=int(WS_ms * fs_i / 1000),
+                k1=k1,
+                k2m=k2_ratio
+            )
+            for sig, fs_i in zip(df["signal"], df["fs"])
         ]
 
     # -----------------------------

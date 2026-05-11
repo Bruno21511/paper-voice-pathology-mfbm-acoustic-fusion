@@ -17,8 +17,10 @@ def _apply_block_pca(X, train_idx, test_idx):
     # define blocks explicitly
     # --------------------------
     blocks = {
-        "mfbm_mean": (0, 12, 2),
-        "mfbm_std":  (12, 24, 1),
+        "mfbm_mean1-6": (0, 6, 2),
+        "mfbm_mean7-12": (6, 12, 1),
+        "mfbm_std1-6": (0, 6, 2),
+        "mfbm_std7-12": (6, 12, 1),
     }
 
     Xtr_out = []
