@@ -167,7 +167,7 @@ The MEEI database is widely used in the literature, but presents known methodolo
 - Final spectral representation: 6 dimensions (four arrays: 2+2+1+1)
 
 ### 3. Acoustic Feature Extraction
-- Extracted via Parselmouth (Python interface to Praat) [4]
+- Extracted via Parselmout (Python interface to Praat) [4]
 - Features: Jitter (%), Shimmer (%), Harmonic-to-Noise Ratio (HNR)
 - Final acoustic representation: 3 dimensions
 
