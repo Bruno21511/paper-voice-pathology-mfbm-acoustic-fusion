@@ -1,4 +1,5 @@
-# Pathological Voice Classification using Spectral and Acoustic Features
+# Discriminating Voice Pathologies Through a Combination of Spectral and Acoustic Features
+### Feature fusion analysis in the MEEI corpus
 
 ![Python](https://img.shields.io/badge/Python-3.10.20-blue)
 ![Speech Biomarkers](https://img.shields.io/badge/Domain-Speech%20Biomarkers-purple)
@@ -13,6 +14,8 @@ This repository contains the code and data associated with the paper:
 > CENTERIS – International Conference on ENTERprise Information Systems / ProjMAN / HCist 2024  
 > *Procedia Computer Science*, Volume 256, Pages 835–842, 2025  
 > DOI: [10.1016/j.procs.2025.02.185](https://doi.org/10.1016/j.procs.2025.02.185)
+
+The full paper can be found [here:](paper/Rodrigues_et_al_HCist2024.pdf)
 
 The work investigates whether combining spectral (MFBM) and acoustic (jitter, shimmer and HNR) parameters improves the discrimination of healthy and pathological voices, using sustained vowel /a/ recordings and a Support Vector Machine (SVM) classifier.
 
@@ -40,7 +43,9 @@ Four classification tasks are addressed: three One vs. One binary and one 3-clas
 
 The figure below shows a bar plot summarizing the accuracies of all 12 experimental conditions (four tasks × three feature sets).
 
-<img src="results/figures/04accuracies_bar.png" width="750">
+<p align="center">
+  <img src="results/figures/04accuracies_bar.png" width="750">
+</p>
 
 ### 2. One-vs-All classification results (derived from 3-class model) (in %)
 
@@ -63,14 +68,6 @@ AUC scores provide a threshold-independent measure of  of discriminative perform
 | Combined   | 0.9649     | 0.9667     | 0.7814       |
 
 Across all tasks, <b>combining acoustic and spectral parameters consistently yields the highest performance</b>.
-
----
-
-## Original Paper
-
-This repository re-implements the methodology and experimental results presented in:
-
-- Rodrigues et al., *HCist 2024*: [Full paper (PDF)](paper/Rodrigues_et_al_HCist2024.pdf)
 
 ---
 
