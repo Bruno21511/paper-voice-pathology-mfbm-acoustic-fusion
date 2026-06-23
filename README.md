@@ -1,11 +1,9 @@
 # Discriminating Voice Pathologies Through a Combination of Spectral and Acoustic Features
 ### Feature fusion analysis in the MEEI corpus
 
-![Python](https://img.shields.io/badge/Python-3.10.20-blue)
-![Speech Biomarkers](https://img.shields.io/badge/Domain-Speech%20Biomarkers-purple)
-![Method](https://img.shields.io/badge/Method-SVM-orange)
+![CI](https://github.com/Bruno21511/paper-voice-pathology-mfbm/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![Paper](https://img.shields.io/badge/Paper-CENTERIS_2025-red)
-![Status](https://img.shields.io/badge/Status-Completed-green)
 
 This repository contains the code and data associated with the paper:
 
@@ -45,18 +43,18 @@ Four classification tasks are addressed: three One vs. One binary and one 3-clas
 The figure below shows a bar plot summarizing the accuracies of all 12 experimental conditions (four tasks × three feature sets).
 
 <p align="center">
-  <img src="results/figures/04accuracies_bar.png" width="750">
+  <img src="results/figures/04_accuracies_bar.png" width="750">
 </p>
 
 ### 2. One-vs-All classification results (derived from 3-class model) (in %)
 
 These results are derived directly from the 3‑class confusion matrices, enabling fair comparison with previous studies that report One‑vs‑All performance on the same corpus subset.
 
-| Task | Acoustic | Spectral | Combined |
-| :--- | :---: | :---: | :---: |
-| Control vs. All (*) | 88.08 ± 0.61 | 88.05 ± 1.24 | **92.53 ± 0.72** |
-| PhLP vs. All (*) | 70.34 ± 1.12 | 73.36 ± 2.04 | **80.10 ± 1.74** |
-| UVFP vs. All (*) | 76.93 ± 0.95 | 71.99 ± 2.14 | **80.45 ± 1.59** |
+| Task | Acoustic | Spectral | Combined | Study <sup>[[1]](#ref1)</sup> result | Study <sup>[[2]](#ref2)</sup> result | 
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Control vs. All (*) | 88.08 ± 0.61 | 88.05 ± 1.24 | **92.53 ± 0.72** | 87.0 | 90.1 | 
+| PhLP vs. All (*) | 70.34 ± 1.12 | 73.36 ± 2.04 | **80.10 ± 1.74** | 73.4 | 74.7 | 
+| UVFP vs. All (*) | 76.93 ± 0.95 | 71.99 ± 2.14 | **80.45 ± 1.59** | 76.0 | 79.2 | 
 
 
 ### 3. Binary and 3-class classification AUC (area Under the Curve)
@@ -117,7 +115,7 @@ Across all tasks, <b>combining acoustic and spectral parameters consistently yie
 
 ### Audio Corpus (MEEI)
 
-The audio signals used in this work are a subset of the **Massachusetts Eye and Ear Infirmary (MEEI)** Voice Disorders Database, commercialised by Kay Elemetrics Corp. The subset used in this implementation closely follows the one used in [1][2] (see Note on Dataset below). 
+The audio signals used in this work are a subset of the **Massachusetts Eye and Ear Infirmary (MEEI)** Voice Disorders Database, commercialised by Kay Elemetrics Corp. The subset used in this implementation closely follows the one used in [[1]](#ref1)[[2]](#ref2) (see Note on Dataset below). 
 
 | Class | Description | N |
 |-------|-------------|---|
@@ -153,7 +151,7 @@ The MEEI database is widely used in the literature, but presents known methodolo
 
 ### 1. Pre-processing
 - Amplitude normalisation (absolute maximum set to 1)
-- Silence removal at signal boundaries using an energy threshold method based on [3]]
+- Silence removal at signal boundaries using an energy threshold method based on [[3]](#ref3)
 
 ### 2. Spectral Feature Extraction
 - Framing: 30 ms windows, 10 ms step; first and last 3 frames discarded
@@ -166,7 +164,7 @@ The MEEI database is widely used in the literature, but presents known methodolo
 - Final spectral representation: 6 dimensions (four arrays: 2+2+1+1)
 
 ### 3. Acoustic Feature Extraction
-- Extracted via Parselmouth (Python interface to Praat) [4]
+- Extracted via Parselmouth (Python interface to Praat) [[4]](#ref4)
 - Features: Jitter (%), Shimmer (%), Harmonic-to-Noise Ratio (HNR)
 - Final acoustic representation: 3 dimensions
 
@@ -202,29 +200,50 @@ These findings suggest potential benefits in adopting ensemble or hierarchical c
 
 See requirements.txt for dependencies.
 
-### Option A — Starting from pre-extracted features
+### Quick start (recommended)
 
-Open and run `notebooks/02_analysis.ipynb` directly. No audio files required.
+#### Option A — Starting from pre-extracted features
 
-### Option B — Starting from audio files
+If you already have the processed parquet file (included in this repo under `data/processed/`), simply run:
+python main.py
 
-Place the audio files in the expected directory structure:
+This reproduces all paper results: classification metrics, confusion matrices, and figures, saved to `results/metrics/` and `results/figures/`.
+
+#### Option B — Starting from raw audio files
+
+Place the audio corpus outside the repository, following the structure below:
 
 ```
-data/
-└── mysMEEI/
-    ├── mysMEEI.csv
-    ├── control/
-    │   └── *.wav
-    ├── edema/
-    │   └── *.wav
-    ├── nodulo/
-    │   └── *.wav
-    └── UVFP/
-        └── *.wav
+parent_directory/
+├── paper-voice-pathology-mfbm-acoustic-fusion/
+└── corpora/
+    └── mysMEEI/
+        ├── control/
+        │   └── *.wav
+        ├── edema/
+        │   └── *.wav
+        ├── uvfp/
+        │   └── *.wav
+        ├── nodulo/
+        │   └── *.wav
+        └── mysMEEI.csv              # Audio corpus metadata (filename, age, gender, group)
 ```
 
-Then run `notebooks/01_feature_extraction.ipynb` followed by `notebooks/02_analysis.ipynb`.
+**Note**: The corpus directory is configured separately from the repository to avoid storing large audio files in version control.
+
+Run the two steps in order:<br><br>
+python build_dataset.py<br>
+python main.py
+
+### Interactive exploration (notebooks)
+
+For step-by-step exploration, visualization, and the figures used in the README, open and run the notebooks in order:
+
+- `notebooks/01_MFBM_extraction.ipynb` — feature extraction (requires raw audio corpus)
+- `notebooks/02_analysis.ipynb` — classification and analysis (requires only the processed parquet file)
+<br><br>
+
+**Configuration**: Before running the pipeline, check or adjust the dataset names, paths, and extraction parameters in the `config.yaml` file located at the root of the project.
 
 ---
 
@@ -232,30 +251,26 @@ Then run `notebooks/01_feature_extraction.ipynb` followed by `notebooks/02_analy
 
 If you use this code in your research, please cite:
 
-```bibtex
-@article{rodrigues2025,
-  author    = {Rodrigues, Bruno and Cordeiro, Hugo and Marques, Gonçalo},
-  title     = {Discriminating Voice Pathologies Through a Combination of Spectral and Acoustic Features},
-  journal   = {Procedia Computer Science},
-  volume    = {256},
-  pages     = {835--842},
-  year      = {2025},
-  issn      = {1877-0509},
-  doi       = {10.1016/j.procs.2025.02.185},
-  url       = {https://www.sciencedirect.com/science/article/pii/S1877050925005460}
-}
-```
+> **"Discriminating Voice Pathologies Through a Combination of Spectral and Acoustic Features"**  
+> B. Rodrigues, H. Cordeiro, G. Marques  
+> CENTERIS – International Conference on ENTERprise Information Systems / ProjMAN / HCist 2024  
+> *Procedia Computer Science*, Volume 256, Pages 835–842, 2025  
+> DOI: [10.1016/j.procs.2025.02.185](https://doi.org/10.1016/j.procs.2025.02.185)
 
 ---
 
 ## References
 
+<a id="ref1"></a>
 [1] H. Cordeiro, J. Fonseca, I. Guimarães, C. Meneses, "Hierarchical Classification and System Combination for Automatically Identifying Physiological and Neuromuscular Laryngeal Pathologies," Journal of Voice, 2017.
 
+<a id="ref2"></a>
 [2] H. Cordeiro, J. Fonseca, I. Guimarães, C. Meneses, "Voice Pathologies Identification: Speech Signals, Features and Classifiers Evaluation," SPA, 2015.
 
+<a id="ref3"></a>
 [3] L. Lamel, L. Rabiner, A. Rosenberg, J. Wilpon, "An Improved Endpoint Detector for Isolated Word Recognition," IEEE Transactions on Acoustics, Speech and Signal Processing, 1981.
 
+<a id="ref4"></a>
 [4] Y. Jadoul, B. Thompson, B. de Boer, "Introducing Parselmouth: A Python Interface to Praat," Journal of Phonetics, 2018.
 
 ---
