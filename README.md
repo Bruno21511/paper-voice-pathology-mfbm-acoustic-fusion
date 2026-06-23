@@ -35,11 +35,12 @@ Four classification tasks are addressed: three One vs. One binary and one 3-clas
 
 ### 1. Binary and 3-class classification accuracies (in %)
 
-| Method     | HE vs PhLP       | HE vs UVFP       | PhLP vs UVFP     | 3-Class          |
-|------------|------------------|------------------|------------------|------------------|
-| Acoustic   | 84.66 ± 1.00     | 90.24 ± 0.72     | 69.82 ± 1.30     | 67.65 ± 1.11     |
-| Spectral   | 86.01 ± 1.58     | 86.25 ± 1.32     | 62.74 ± 2.99     | 65.78 ± 2.05     |
-| Combined   | 93.03 ± 1.23     | 92.73 ± 1.17     | 74.28 ± 1.93     | 76.15 ± 1.28     |
+| Task | Acoustic | Spectral | Combined |
+| :--- | :---: | :---: | :---: |
+| Control vs. PhLP | 84.66 ± 1.00 | 87.45 ± 1.89 | **94.84 ± 1.09** |
+| Control vs. UVFP | 90.24 ± 0.72 | 85.03 ± 1.71 | **93.37 ± 0.77** |
+| PhLP vs. UVFP | 69.85 ± 1.29 | 66.10 ± 2.77 | **73.55 ± 2.12** |
+| 3-Class | 67.67 ± 1.11 | 66.70 ± 2.05 | **76.54 ± 1.67** |
 
 The figure below shows a bar plot summarizing the accuracies of all 12 experimental conditions (four tasks × three feature sets).
 
@@ -51,21 +52,22 @@ The figure below shows a bar plot summarizing the accuracies of all 12 experimen
 
 These results are derived directly from the 3‑class confusion matrices, enabling fair comparison with previous studies that report One‑vs‑All performance on the same corpus subset.
 
-| Method     | HE vs All        | PhLP vs All      | UVFP vs All      |
-|------------|------------------|------------------|------------------|
-| Acoustic   | 88.08 ± 0.62     | 70.32 ± 1.12     | 76.91 ± 0.94     |
-| Spectral   | 88.53 ± 1.02     | 70.94 ± 2.05     | 72.09 ± 2.10     |
-| Combined   | 91.80 ± 0.66     | 79.48 ± 1.34     | 81.01 ± 1.23     |
+| Task | Acoustic | Spectral | Combined |
+| :--- | :---: | :---: | :---: |
+| Control vs. All (*) | 88.08 ± 0.61 | 88.05 ± 1.24 | **92.53 ± 0.72** |
+| PhLP vs. All (*) | 70.34 ± 1.12 | 73.36 ± 2.04 | **80.10 ± 1.74** |
+| UVFP vs. All (*) | 76.93 ± 0.95 | 71.99 ± 2.14 | **80.45 ± 1.59** |
+
 
 ### 3. Binary and 3-class classification AUC (area Under the Curve)
 
 AUC scores provide a threshold-independent measure of  of discriminative performance
 
-| Method     | HE vs PhLP | HE vs UVFP | PhLP vs UVFP |
-|------------|------------|------------|--------------|
-| Acoustic   | 0.9034     | 0.9599     | 0.7548       |
-| Spectral   | 0.9233     | 0.9447     | 0.6780       |
-| Combined   | 0.9649     | 0.9667     | 0.7814       |
+| Task | Acoustic | Spectral | Combined |
+| :--- | :---: | :---: | :---: |
+| Control vs. PhLP | 0.903 ± 0.005 | 0.947 ± 0.008 | **0.968 ± 0.004** |
+| Control vs. UVFP | 0.960 ± 0.003 | 0.938 ± 0.010 | **0.974 ± 0.005** |
+| PhLP vs. UVFP | 0.755 ± 0.010 | 0.705 ± 0.024 | **0.767 ± 0.014** |
 
 Across all tasks, <b>combining acoustic and spectral parameters consistently yields the highest performance</b>.
 
