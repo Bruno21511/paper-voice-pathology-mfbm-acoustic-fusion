@@ -56,6 +56,9 @@ These results are derived directly from the 3‑class confusion matrices, enabli
 | PhLP vs. All (*) | 70.34 ± 1.12 | 73.36 ± 2.04 | **80.10 ± 1.74** | 73.4 | 74.7 | 
 | UVFP vs. All (*) | 76.93 ± 0.95 | 71.99 ± 2.14 | **80.45 ± 1.59** | 76.0 | 79.2 | 
 
+> **Note on OvA results (*):** One-vs-All results from this study were derived from the 
+> 3-class confusion matrix. Results from previous studies were calculated using TPR, PPV, 
+> class and corpus total subjects (as described in the paper).
 
 ### 3. Binary and 3-class classification AUC (area Under the Curve)
 
@@ -87,21 +90,24 @@ Across all tasks, <b>combining acoustic and spectral parameters consistently yie
 │   ├── 01_feature_extraction.ipynb     # Spectral and acoustic feature extraction
 │   └── 02_classification.ipynb         # Classification, cross-validation, results
 │
-├── results/
-│   ├── figures/                        # Plots and visualisations
-│   └── metrics/                        # Accuracy tables, confusion matrices and per-class metrics
+├├── results/
+│   ├── figures/                    # Generated plots and visualisations
+│   └── metrics/                    # Classification metrics and confusion matrices
 │
-├── src/
-│   ├── data_loader.py                      # Load audio files and metadata
-│   ├── mel_filterbank.py                   # Define Mel filterbank (custom bands)
-│   ├── get_MFBM.py                         # Extract Mel Frequency Band Magnitudes (MFBM)
-│   ├── extract_voice_features.py           # Compute acoustic features (Jitter, Shimmer, HNR)
-│   ├── build_X.py                          # Assemble feature matrices for classification
-│   ├── run_cv_experiment.py                # Cross-validation pipeline (SVM, metrics)
-│   ├── export_dataframe.py                 # Save extracted features to disk
-│   ├── import_dataframe.py                 # Load precomputed feature data
-│   ├── plot_meldefined_magnitudes_per_class.py  # Visualise spectral features per class
-│   └── plot_acoustic_features.py           # Visualise acoustic feature distributions
+├── src/                            # Source code modules
+│   ├── data/                       # Data loading and dataframe handling
+│   ├── features/                   # Signal processing and feature extraction
+│   ├── analysis/                   # Statistical analysis and feature evaluation
+│   ├── evaluation/                 # Classification metrics and evaluation utilities
+│   └── visualization/              # Plotting and figure generation
+│
+├── tests/                          # Unit tests
+│
+├── config.yaml                     # Project configuration and experiment parameters
+├── pytest.ini                      # Pytest configuration
+├── .github/
+│   └── workflows/
+│       └── ci.yml                  # Continuous integration pipeline
 │
 ├── .gitignore
 ├── LICENSE
@@ -115,7 +121,7 @@ Across all tasks, <b>combining acoustic and spectral parameters consistently yie
 
 ### Audio Corpus (MEEI)
 
-The audio signals used in this work are a subset of the **Massachusetts Eye and Ear Infirmary (MEEI)** Voice Disorders Database, commercialised by Kay Elemetrics Corp. The subset used in this implementation closely follows the one used in [[1]](#ref1)[[2]](#ref2) (see Note on Dataset below). 
+The audio signals used in this work are a subset of the **Massachusetts Eye and Ear Infirmary (MEEI)** Voice Disorders Database, commercialised by Kay Elemetrics Corp. The subset used in this implementation closely follows the one used in [[1][2]](#references) (see Note on Dataset below). 
 
 | Class | Description | N |
 |-------|-------------|---|
